@@ -5,7 +5,7 @@ import User from "../models/user.model.js";
 import { formatZodError } from "../utils/zodError.helper.js";
 import { signupSchema } from "../validators/user.validator.js";
 
-export const createUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   try {
     const validation = signupSchema.safeParse(req.body);
 
