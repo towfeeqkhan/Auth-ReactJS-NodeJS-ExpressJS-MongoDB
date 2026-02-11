@@ -3,7 +3,7 @@ import { z } from "zod";
 import User from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
 import { formatZodError } from "../utils/zodError.helper.js";
-import { signupSchema } from "../validators/user.validator.js";
+import { loginSchema, signupSchema } from "../validators/user.validator.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -50,7 +50,18 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const validation = loginSchema.safeParse(req.body);
+
+    if (!validation.success) {
+      console.log(z.prettifyError(validation.error));
+
+      return res.status(400).json({
+        message: "Validation failed",
+        errors: formatZodError(validation.error),
+      });
+    }
+
+    const { email, password } = validation.data;
 
     const user = await User.findOne({ email });
 

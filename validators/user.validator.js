@@ -9,7 +9,10 @@ export const signupSchema = z.object({
           : "Name must be a string",
     })
     .trim()
-    .min(3, { error: "Name must be at least 3 characters long" }),
+    .min(1, { error: "Name is required" })
+    .pipe(
+      z.string().min(3, { error: "Name must be at least 3 characters long" }),
+    ),
   email: z
     .string({
       error: (issue) =>
@@ -19,6 +22,7 @@ export const signupSchema = z.object({
     })
     .trim()
     .toLowerCase()
+    .min(1, { error: "Email is required" })
     .pipe(z.email({ error: "Invalid email address" })),
   password: z
     .string({
@@ -28,6 +32,34 @@ export const signupSchema = z.object({
           : "Password must be a string",
     })
     .trim()
-    .min(6, { error: "Password must be at least 6 characters long" }),
+    .min(1, { error: "Password is required" })
+    .pipe(
+      z
+        .string()
+        .min(6, { error: "Password must be at least 6 characters long" }),
+    ),
   role: z.enum(["user", "admin"]).optional(),
+});
+
+export const loginSchema = z.object({
+  email: z
+    .string({
+      error: (issue) =>
+        issue.input === undefined
+          ? "Email is required"
+          : "Email must be a string",
+    })
+    .trim()
+    .toLowerCase()
+    .min(1, { error: "Email is required" })
+    .pipe(z.email({ error: "Invalid email address" })),
+  password: z
+    .string({
+      error: (issue) =>
+        issue.input === undefined
+          ? "Password is required"
+          : "Password must be a string",
+    })
+    .trim()
+    .min(1, { error: "Password is required" }),
 });
