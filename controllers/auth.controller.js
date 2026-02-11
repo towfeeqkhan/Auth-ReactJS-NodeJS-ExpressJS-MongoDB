@@ -87,3 +87,7 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const verifyUser = async (req, res) => {
+  res.status(200).json({ message: "User is verified", user: req.user });
+};
