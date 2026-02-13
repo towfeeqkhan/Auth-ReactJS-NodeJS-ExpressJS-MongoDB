@@ -1,6 +1,8 @@
 import express from "express";
 import connectDB from "./config/db.js";
+import "./config/passport.js";
 import authRoutes from "./routes/auth.route.js";
+import googleAuthRoutes from "./routes/googleAuth.route.js";
 
 await connectDB();
 
@@ -13,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/auth", googleAuthRoutes);
 
 const PORT = process.env.PORT || 3000;
 
