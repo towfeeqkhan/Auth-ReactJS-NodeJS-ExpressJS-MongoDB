@@ -195,3 +195,39 @@ export const refreshTokenHandler = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+export const logoutUser = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.status(204).json({ message: "No active session" });
+    }
+
+    let decoded;
+
+    try {
+      decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
+    } catch {
+      return res.status(204).json({ message: "Already logged out" });
+    }
+
+    const user = await User.findById(decoded._id);
+
+    if (user) {
+      user.refreshToken = null;
+      await user.save();
+    }
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
