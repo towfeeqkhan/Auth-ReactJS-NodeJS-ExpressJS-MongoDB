@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import express from "express";
 import connectDB from "./config/db.js";
 import "./config/passport.js";
@@ -9,6 +10,7 @@ await connectDB();
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("Server is Live");

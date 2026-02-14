@@ -12,21 +12,23 @@ export const protectRoute = async (req, res, next) => {
     }
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Access token missing" });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_KEY);
 
-    const user = await User.findById(decoded._id).select("-password");
+    const user = await User.findById(decoded._id).select(
+      "-password -refreshToken",
+    );
 
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "User not found" });
     }
 
     req.user = user;
 
     next();
   } catch (error) {
-    res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Invalid or expired access token" });
   }
 };
