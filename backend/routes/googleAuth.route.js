@@ -15,7 +15,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "http://localhost:5173/login",
+    failureRedirect: `${process.env.FRONTEND_URL || "http://localhost:5173"}/login`,
   }),
   async (req, res) => {
     try {
@@ -41,11 +41,16 @@ router.get(
         maxAge: ms(process.env.JWT_REFRESH_KEY_EXPIRES_IN || "7d"),
       });
 
-      // Redirect
-      res.redirect("http://localhost:5173/dashboard");
+      // Redirect to frontend with access token
+      const frontendURL = process.env.FRONTEND_URL || "http://localhost:5173";
+      res.redirect(
+        `${frontendURL}/auth/google/success?accessToken=${accessToken}`,
+      );
     } catch (error) {
       console.log(error);
-      res.redirect("http://localhost:5173/login");
+      res.redirect(
+        `${process.env.FRONTEND_URL || "http://localhost:5173"}/login`,
+      );
     }
   },
 );

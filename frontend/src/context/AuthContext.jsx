@@ -55,6 +55,11 @@ export const AuthProvider = ({ children }) => {
     return data;
   };
 
+  // ── Set user from Google OAuth ──
+  const setUserFromGoogle = (userData) => {
+    setUser(userData);
+  };
+
   // ── Logout ──
   const logout = async () => {
     try {
@@ -68,7 +73,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, register, logout, setUserFromGoogle }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import "./index.css";
 import MainLayout from "./layout/MainLayout.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import GoogleAuthSuccess from "./pages/GoogleAuthSuccess.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             <Dashboard />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/auth/google/success",
+        element: <GoogleAuthSuccess />,
       },
     ],
   },
