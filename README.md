@@ -68,10 +68,10 @@ Auth-ReactJS-NodeJS-ExpressJS-MongoDB/
 │   │   ├── auth.route.js          # Auth routes (register, login, verify, refresh, logout)
 │   │   └── googleAuth.route.js    # Google OAuth routes
 │   ├── utils/
-│   │   ├── generateToken.js       # JWT access &amp; refresh token generation
+│   │   ├── generateToken.js       # JWT access & refresh token generation
 │   │   └── zodError.helper.js     # Zod error formatting utility
 │   ├── validators/
-│   │   └── user.validator.js      # Zod schemas for signup &amp; login validation
+│   │   └── user.validator.js      # Zod schemas for signup & login validation
 │   ├── .env.example               # Backend environment variable template
 │   ├── index.js                   # Express app entry point
 │   └── package.json
@@ -81,7 +81,7 @@ Auth-ReactJS-NodeJS-ExpressJS-MongoDB/
 │   │   └── vite.svg
 │   ├── src/
 │   │   ├── api/
-│   │   │   └── axios.js           # Axios instance with interceptors &amp; token management
+│   │   │   └── axios.js           # Axios instance with interceptors & token management
 │   │   ├── components/
 │   │   │   ├── ProtectedRoute.jsx        # Auth guard for protected pages
 │   │   │   └── RedirectIfAuthenticated.jsx # Redirects logged-in users from auth pages
